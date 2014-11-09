@@ -1,0 +1,13 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" tools:context=".MainActivity">
+    <item android:id="@+id/standen"
+    android:title="Stand" />
+    <item android:id="@+id/uitslagen"
+        android:title="Team uitslagen" />
+    <item android:id="@+id/programma"
+        android:title="Programma" />
+    <item android:id="@+id/weekuitslagen"
+        android:title="Week uitslagen" />
+    <item android:id="@+id/fieldmap"
+        android:title="Plattegrond velden" />
+</menu>
