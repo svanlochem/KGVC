@@ -123,6 +123,16 @@ public class MainActivity extends Activity {
         Elements tablebody;
         String what1="failed";
 
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            progress = new ProgressDialog(mSingleton);
+            progress.setTitle("Loading");
+            progress.setMessage("Teams laden...");
+            progress.setCancelable(true);
+            progress.show();
+        }
+
         protected Document doInBackground(String... params) {
             // TimeUnit.SECONDS.sleep(2);
             String url=params[0];
@@ -139,6 +149,9 @@ public class MainActivity extends Activity {
         protected void onPostExecute(Document result) {
             super.onPostExecute(result);
 
+            progress.dismiss();
+
+            SharedPreferences.Editor editor = prefs.edit();
             Elements tablebody;
 
             tablebody   = result.select("table > tbody > tr > td:eq(0)");
@@ -149,8 +162,15 @@ public class MainActivity extends Activity {
             for (int i = 0; i < 20; i++) {
                 if(rowIt.hasNext()){
                     teams.add(rowIt.next().text());
+
+                    //Save team names
+                    String teamName =  "teamName" + Integer.toString(i+1);
+                    editor.putString(teamName,rowIt.next().text());
                 }
             }
+
+            editor.commit();
+
             String[] teamstr = new String[teams.size()];
             teams.toArray(teamstr);
 
