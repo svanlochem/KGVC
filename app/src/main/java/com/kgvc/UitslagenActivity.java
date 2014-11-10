@@ -70,6 +70,8 @@ public class UitslagenActivity extends Activity {
         String URLb = URL.substring(33);
         URL = URLa + "teammatches" + URLb;
 
+        fillTeamSpinner();
+
         addListenerOnSpinnerItemSelection();
 
         mt = new MyTask();
@@ -84,16 +86,23 @@ public class UitslagenActivity extends Activity {
         ll.getBackground().setAlpha(75);
     }
 
-//    private void fillTeamSpinner(String[] teamstr){
-//        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, teamstr);
-//        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-//        Spinner sItems = (Spinner) findViewById(R.id.spinner_team);
-//        sItems.setAdapter(adapter);
-//    }
+    private void fillTeamSpinner(){
+        ArrayList<String> teamstr = new ArrayList<String>();
+        for(int i=0;i<prefs.getInt("competitionSize", -1);i++){
+            String teamName = "teamName" + Integer.toString(i+1);
+            teamstr.add(prefs.getString(teamName, null));
+        }
+
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, teamstr);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        Spinner sItems = (Spinner) findViewById(R.id.spinner2);
+        sItems.setAdapter(adapter);
+    }
 
     private void addListenerOnSpinnerItemSelection() {
         spinner = (Spinner) findViewById(R.id.spinner2);
-        spinner.setSelection(8);
+
+        spinner.setSelection(prefs.getInt("chosenTeamNumber", -1));
 
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             public void onItemSelected(AdapterView<?> parent, View view, int pos,long id) {

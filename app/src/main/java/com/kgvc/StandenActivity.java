@@ -104,7 +104,7 @@ public class StandenActivity extends Activity {
     private TableRow createRow(String[] headerstr) {
         TableRow row1 = new TableRow(this);
         boolean makeBold;
-        if(headerstr[1].equalsIgnoreCase(prefs.getString("teamName", "ERROR!!"))) {
+        if(headerstr[1].equalsIgnoreCase(prefs.getString("chosenTeamName", "ERROR!!"))) {
             makeBold = true;
         } else {
             makeBold = false;

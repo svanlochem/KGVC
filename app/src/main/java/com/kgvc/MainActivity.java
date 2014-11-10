@@ -84,14 +84,15 @@ public class MainActivity extends Activity {
     }
 
     private void ListenerOnTeamSpinner() {
-        competitionSpinner = (Spinner) findViewById(R.id.spinner_team);
+        TeamSpinner = (Spinner) findViewById(R.id.spinner_team);
 
-        competitionSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        TeamSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             public void onItemSelected(AdapterView<?> parent, View view, int pos,long id) {
 
                 String TeamName = parent.getSelectedItem().toString();
                 SharedPreferences.Editor editor = prefs.edit();
-                editor.putString("teamName", TeamName);
+                editor.putString("chosenTeamName", TeamName);
+                editor.putInt("chosenTeamNumber",pos-1);
                 editor.commit();
 
 
@@ -148,7 +149,6 @@ public class MainActivity extends Activity {
 
         protected void onPostExecute(Document result) {
             super.onPostExecute(result);
-
             progress.dismiss();
 
             SharedPreferences.Editor editor = prefs.edit();
@@ -158,17 +158,15 @@ public class MainActivity extends Activity {
 
             ArrayList<String> teams = new ArrayList<String>();
             teams.add("Kies een team");
-            ListIterator<Element> rowIt = tablebody.listIterator();
-            for (int i = 0; i < 20; i++) {
-                if(rowIt.hasNext()){
-                    teams.add(rowIt.next().text());
+            for(int i=0; i<tablebody.size();i++){
+                teams.add(tablebody.get(i).text());
 
-                    //Save team names
-                    String teamName =  "teamName" + Integer.toString(i+1);
-                    editor.putString(teamName,rowIt.next().text());
-                }
+                //Save team names
+                String teamName =  "teamName" + Integer.toString(i+1);
+                editor.putString(teamName,tablebody.get(i).text());
             }
 
+            editor.putInt("competitionSize",tablebody.size());
             editor.commit();
 
             String[] teamstr = new String[teams.size()];
@@ -205,11 +203,6 @@ public class MainActivity extends Activity {
             String teamPageURL = "ERROR";
             Elements tablebody;
             tablebody = result.select("td:nth-last-child(2n) a");
-
-//            ListIterator<Element> rowIt = tablebody.listIterator();
-//            for (int i = 0; i < TeamNumber; i++) {
-//                teamPageURL = rowIt.next().attr("href");
-//            }
 
             teamPageURL = tablebody.get(TeamNumber-1).attr("href");
 
