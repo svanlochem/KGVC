@@ -11,7 +11,6 @@ import android.graphics.Typeface;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.LinearLayout;
@@ -30,9 +29,7 @@ import java.util.ArrayList;
 import java.util.ListIterator;
 
 public class StandenActivity extends Activity {
-
     SharedPreferences prefs;
-    private static final String TAG = StandenActivity.class.getSimpleName();
 
     Context mSingleton;
     ScrollView ScrollLayout;
@@ -40,7 +37,6 @@ public class StandenActivity extends Activity {
     MyTask mt;
 
     String URL = "";
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,7 +48,7 @@ public class StandenActivity extends Activity {
         ScrollLayout = (ScrollView)findViewById(R.id.scrollView1);
 
         prefs = PreferenceManager.getDefaultSharedPreferences(this);
-        setTitle(prefs.getString("chosenTeamName", "ERROR!!"));
+        setTitle(prefs.getString("chosenTeamName", "ERROR!!") + " - Stand");
 
         //Create the layout
         TabLayout = new TableLayout(this);
@@ -67,8 +63,6 @@ public class StandenActivity extends Activity {
         String URLa = URL.substring(0,29);
         String URLb = URL.substring(33);
         URL = URLa + "teamstandings" + URLb;
-
-//        Log.d(TAG, URL);
 
         mt = new MyTask();
         mt.execute(URL);
@@ -129,8 +123,7 @@ public class StandenActivity extends Activity {
         ProgressDialog progress;
         Document doc;
         Elements table;
-        Elements tablebody;
-        String what1="failed";
+
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
@@ -142,7 +135,6 @@ public class StandenActivity extends Activity {
         }
 
         protected Document doInBackground(String... params) {
-            // TimeUnit.SECONDS.sleep(2);
             String url=params[0];
             try {
                 doc = Jsoup.connect(url).get();
@@ -156,7 +148,6 @@ public class StandenActivity extends Activity {
 
         protected void onPostExecute(Document result) {
             super.onPostExecute(result);
-            //tvInfo.setText(result.text());\
             progress.dismiss();
 
             Elements tableheader;
@@ -216,11 +207,11 @@ public class StandenActivity extends Activity {
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(intent);
                 return true;}
-//            case R.id.weekuitslagen:{
-//                Intent intent = new Intent(this, WeekUitslagenActivity.class);
-//                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
-//                startActivity(intent);
-//                return true;}
+            case R.id.weekuitslagen:{
+                Intent intent = new Intent(this, WeekUitslagenActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent);
+                return true;}
             case R.id.fieldmap:{
                 Intent intent = new Intent(this, FieldMapActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -241,6 +232,3 @@ public class StandenActivity extends Activity {
         }
     }
 }
-
-//Toast.makeText(getApplicationContext(), prefs.getString("teamURL", "Does not exist!!"), Toast.LENGTH_LONG).show();
-//Log.d(TAG, prefs.getString("teamURL", "Does not exist!!"));

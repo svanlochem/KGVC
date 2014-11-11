@@ -5,6 +5,7 @@
     <string name="title_full">Kunstgras Voetbal Competitie</string>
     <string name="title_sub">Najaar 2014-2015</string>
     <string name="action_settings">Settings</string>
+    <string name= "week_prompt">Kies een week</string>
 
     <color name="grey">#3C3C3C</color>
     <color name="white">#FFFFFF</color>
@@ -19,6 +20,24 @@
         <item>20.00-21.00 uur</item>
         <item>21.00-22.00 uur</item>
         <item>22.00-23.00 uur</item>
+    </string-array>
+
+    <string-array name="week_array">
+        <item>Week 1 - 15 September 2014</item>
+        <item>Week 2 - 22 September 2014</item>
+        <item>Week 3 - 29 September 2014</item>
+        <item>Week 4 - 6 Oktober 2014</item>
+        <item>Week 5 - 13 Oktober 2014</item>
+        <item>Week 6 - 20 Oktober 2014</item>
+        <item>Week 7 - 10 November 2014</item>
+        <item>Week 8 - 17 November 2014</item>
+        <item>Week 9 - 24 November 2014</item>
+        <item>Week 10 - 1 December 2014</item>
+        <item>Week 11 - 8 December 2014</item>
+        <item>Week 12 - 15 December 2014</item>
+        <item>Week 13 - 5 Januari 2014</item>
+        <item>Week 14 - 12 Januari 2014</item>
+        <item>Week 15 - 9 Februari 2014</item>
     </string-array>
 
 </resources>

@@ -13,8 +13,11 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
+import android.widget.Spinner;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
@@ -25,28 +28,32 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.ListIterator;
 
-public class ProgrammaActivity extends Activity {
+public class WeekUitslagenActivity  extends Activity{
     SharedPreferences prefs;
 
     Context mSingleton;
     ScrollView ScrollLayout;
     TableLayout TabLayout;
     MyTask mt;
-
+    private Spinner spinner;
+    boolean firstIgnoreSpinner = false;
     String URL = "";
     String chosenTeam = "";
+    String baseURL = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_standen);
+        setContentView(R.layout.activity_dropdown);
 
         prefs = PreferenceManager.getDefaultSharedPreferences(this);
         chosenTeam = prefs.getString("chosenTeamName", "ERROR!!");
-        setTitle(chosenTeam + " - Programma");
+        setTitle(chosenTeam + " - Week Uitslagen");
 
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
@@ -61,11 +68,8 @@ public class ProgrammaActivity extends Activity {
 
         mSingleton = this;
 
-        URL = prefs.getString("teamURL", null);
-
-        String URLa = URL.substring(0,29);
-        String URLb = URL.substring(33);
-        URL = URLa + "matches" + URLb;
+        URL = findWeekURL(); //Retrieve the initial URL (for the nearest week)
+        addListenerOnSpinnerItemSelection(); //Retrieve the spinner input URL
 
         mt = new MyTask();
         mt.execute(URL);
@@ -79,30 +83,153 @@ public class ProgrammaActivity extends Activity {
         ll.getBackground().setAlpha(75);
     }
 
-    private TableRow createWeekRow(String[] weekstr) {
-        TableRow row1 = new TableRow(this);
+    private void addListenerOnSpinnerItemSelection() {
+        spinner = (Spinner) findViewById(R.id.spinner);
 
-        if(weekstr[0].length()>31) {
-            weekstr[0] = weekstr[0].substring(31, weekstr[0].length());
-        }
+        if(URL.substring(84).equals("20140915")) spinner.setSelection(0);
+        else if(URL.substring(84).equals("20140922")) spinner.setSelection(1);
+        else if(URL.substring(84).equals("20140929")) spinner.setSelection(2);
+        else if(URL.substring(84).equals("20141006")) spinner.setSelection(3);
+        else if(URL.substring(84).equals("20141013")) spinner.setSelection(4);
+        else if(URL.substring(84).equals("20141020")) spinner.setSelection(5);
+        else if(URL.substring(84).equals("20141110")) spinner.setSelection(6);
+        else if(URL.substring(84).equals("20141117")) spinner.setSelection(7);
+        else if(URL.substring(84).equals("20141124")) spinner.setSelection(8);
+        else if(URL.substring(84).equals("20141201")) spinner.setSelection(9);
+        else if(URL.substring(84).equals("20141208")) spinner.setSelection(10);
+        else if(URL.substring(84).equals("20141215")) spinner.setSelection(11);
+        else if(URL.substring(84).equals("20150105")) spinner.setSelection(12);
+        else if(URL.substring(84).equals("20150112")) spinner.setSelection(13);
+        else if(URL.substring(84).equals("20150209")) spinner.setSelection(14);
 
-        for (int i = 0; i < weekstr.length; i++) {
-            TextView t1 = new TextView(this);
-            t1.setPadding(10, 0, 10, 0);
-            t1.setTypeface(null, Typeface.BOLD);
-            t1.setText(weekstr[i]);
-            row1.addView(t1);
-        }
-        return row1;
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            public void onItemSelected(AdapterView<?> parent, View view, int pos,long id) {
+
+                if(firstIgnoreSpinner) {
+                    changeWeek(pos);
+                }
+                else {
+                    firstIgnoreSpinner = true;
+                }
+            }
+
+            public void onNothingSelected(AdapterView<?> arg0) {    }
+        });
     }
 
-    private TableRow createHeaderRow(String[] headerstr) {
+    public void changeWeek(int pos){
+        String datePart = "";
+
+        if(pos == 0) datePart = "20140915";
+        else if(pos == 1) datePart = "20140922";
+        else if(pos == 2) datePart = "20140929";
+        else if(pos == 3) datePart = "20141006";
+        else if(pos == 4) datePart = "20141013";
+        else if(pos == 5) datePart = "20141020";
+        else if(pos == 6) datePart = "20141110";
+        else if(pos == 7) datePart = "20141117";
+        else if(pos == 8) datePart = "20141124";
+        else if(pos == 9) datePart = "20141201";
+        else if(pos == 10) datePart = "20141208";
+        else if(pos == 11) datePart = "20141215";
+        else if(pos == 12) datePart = "20150105";
+        else if(pos == 13) datePart = "20150112";
+        else if(pos == 14) datePart = "20150209";
+
+        URL = baseURL + datePart;
+
+        TabLayout.removeAllViews();
+
+        mt = new MyTask();
+        mt.execute(URL);
+    }
+
+    private String findWeekURL(){
+
+        SimpleDateFormat formatterYear = new SimpleDateFormat( "yyyy" );
+        String year = formatterYear.format( new java.util.Date() );
+
+        SimpleDateFormat formatterMonth = new SimpleDateFormat( "MM" );
+        String month = formatterMonth.format( new java.util.Date() );
+        int monthInt  = Integer.parseInt(month);
+
+        SimpleDateFormat formatterDay = new SimpleDateFormat( "dd" );
+        String day = formatterDay.format( new java.util.Date() );
+        int dayInt = Integer.parseInt(day);
+
+        SimpleDateFormat formatterDayS = new SimpleDateFormat("E");
+        String dayS = formatterDayS.format( new java.util.Date() );
+
+        int minday = 0;
+
+        Calendar c = Calendar.getInstance();
+        int dayOfWeek = c.get(Calendar.DAY_OF_WEEK);
+
+        if (Calendar.MONDAY == dayOfWeek) minday = 0;
+        else if (Calendar.TUESDAY == dayOfWeek) minday = 1;
+        else if (Calendar.WEDNESDAY == dayOfWeek) minday = 2;
+        else if (Calendar.THURSDAY == dayOfWeek) minday = 3;
+        else if (Calendar.FRIDAY == dayOfWeek) minday = 4;
+        else if (Calendar.SATURDAY == dayOfWeek) minday = 5;
+        else if (Calendar.SUNDAY == dayOfWeek) minday = 6;
+
+        dayInt = dayInt - minday;
+
+        if(dayInt<1){
+            c.add(Calendar.MONTH, -1);
+            int monthMaxDays = c.getActualMaximum(Calendar.DAY_OF_MONTH);
+
+            monthInt = monthInt - 1;          //set to previous month
+            dayInt   = monthMaxDays + dayInt; //calculate the day in previous month
+        }
+
+        int intMonthLength = (int) Math.log10(monthInt) + 1;
+        if(intMonthLength==1){
+            String monthstr = Integer.toString(monthInt);
+            month = "0"+ monthstr;
+        }
+
+
+
+        int intDayLength = (int) Math.log10(dayInt) + 1;
+        if(intDayLength==1){
+            String daystr = Integer.toString(dayInt);
+            day = "0"+ daystr;
+        } else{
+            day = Integer.toString(dayInt);
+        }
+
+        String dateURL = year + month + day;
+
+        if (dateURL.equals("20141027")){
+            dateURL = "20141020";
+        }
+        if (dateURL.equals("20141103")){
+            dateURL = "20141020";
+        }
+        if (dateURL.equals("20141222")){
+            dateURL = "20141215";
+        }
+        if (dateURL.equals("20141229")){
+            dateURL = "20141215";
+        }
+
+        prefs = PreferenceManager.getDefaultSharedPreferences(this);
+        URL = prefs.getString("teamURL", null);
+
+        String URLa = URL.substring(0,29);
+        String URLb = URL.substring(33,79);
+        baseURL = URLa + "matches" + URLb + "d=";
+
+        String URL = baseURL + dateURL;
+        return URL;
+    }
+
+    public TableRow createHeaderRow(String[] headerstr) {
         TableRow row1 = new TableRow(this);
 
-        if(headerstr.length > 4) {
-            headerstr[4] = "";
-            headerstr[5] = "";
-        }
+        headerstr[4] = "";
+        headerstr[5] = "";
 
         for (int i = 0; i < headerstr.length; i++) {
             if(i!=0 && i!=1 && i!=2) {
@@ -116,7 +243,7 @@ public class ProgrammaActivity extends Activity {
         return row1;
     }
 
-    private TableRow createRow(String[] headerstr) {
+    public TableRow createRow(String[] headerstr) {
         TableRow row1 = new TableRow(this);
 
         String FirstPart  = "ERROR";
@@ -133,11 +260,10 @@ public class ProgrammaActivity extends Activity {
         }
 
         headerstr[7]=FirstPart + " " +SecondPart;
-        if(headerstr[3].length() > 15) {headerstr[3] = headerstr[3].substring(0, 15); }
-        if(headerstr[5].length() > 15) {headerstr[5] = headerstr[5].substring(0, 15); }
+        if(headerstr[3].length() > 14) {headerstr[3] = headerstr[3].substring(0, 14); }
+        if(headerstr[5].length() > 14) {headerstr[5] = headerstr[5].substring(0, 14); }
 
         boolean makeBold;
-
         if(headerstr[3].contains(chosenTeam) || headerstr[5].contains(chosenTeam)) {
             makeBold = true;
         } else {
@@ -159,7 +285,6 @@ public class ProgrammaActivity extends Activity {
         return row1;
     }
 
-
     class MyTask extends AsyncTask<String, Void, Document> {
         ProgressDialog progress;
         Document doc;
@@ -170,7 +295,7 @@ public class ProgrammaActivity extends Activity {
             super.onPreExecute();
             progress = new ProgressDialog(mSingleton);
             progress.setTitle("Loading");
-            progress.setMessage("Programma laden...");
+            progress.setMessage("Week laden...");
             progress.setCancelable(true);
             progress.show();
         }
@@ -191,27 +316,11 @@ public class ProgrammaActivity extends Activity {
             super.onPostExecute(result);
             progress.dismiss();
 
-            Elements tableweek;
             Elements tableheader;
             Elements tablebody;
 
-            tableweek   = result.select("table~table > caption");
             tableheader = result.select("table~table > thead > tr > td");
             tablebody   = result.select("table~table > tbody > tr");
-
-            ArrayList<String> week = new ArrayList<String>();
-            ListIterator<Element> weekIt = tableweek.listIterator();
-            for(int i = 0; i < 10; i++){
-                if(weekIt.hasNext()){
-                    week.add(weekIt.next().text());
-                }
-            }
-
-            String[] weekstr = new String[week.size()];
-            week.toArray(weekstr);
-            TabLayout.addView(createWeekRow(weekstr));
-
-
 
             ArrayList<String> header = new ArrayList<String>();
             ListIterator<Element> postIt = tableheader.listIterator();
@@ -248,7 +357,6 @@ public class ProgrammaActivity extends Activity {
         }
     }
 
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -269,8 +377,8 @@ public class ProgrammaActivity extends Activity {
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(intent);
                 return true;}
-            case R.id.weekuitslagen:{
-                Intent intent = new Intent(this, WeekUitslagenActivity.class);
+            case R.id.programma:{
+                Intent intent = new Intent(this, ProgrammaActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(intent);
                 return true;}

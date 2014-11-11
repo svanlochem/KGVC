@@ -30,6 +30,8 @@
         </activity>
         <activity android:name="com.kgvc.ProgrammaActivity">
         </activity>
+        <activity android:name="com.kgvc.WeekUitslagenActivity">
+        </activity>
     </application>
 
 </manifest>

@@ -8,32 +8,21 @@ import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.util.Log;
 import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
-import android.widget.Toast;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
-
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.ListIterator;
-import java.util.Set;
-
 
 public class MainActivity extends Activity {
-
     SharedPreferences prefs;
-    private static final String TAG = StandenActivity.class.getSimpleName();
 
     Context mSingleton;
     MyCompetitionTask CompetitionTask;
@@ -52,7 +41,6 @@ public class MainActivity extends Activity {
         prefs = PreferenceManager.getDefaultSharedPreferences(this);
 
         if(prefs.getBoolean("alreadyChosenTeam",false)) {
-            Log.d(TAG,"ChosenTeamStart");
             Intent intent = new Intent(MainActivity.this, StandenActivity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(intent);
@@ -60,7 +48,6 @@ public class MainActivity extends Activity {
 
         //If this activity is called using the settings button, remove all team settings in order to let the user to choose another team
         if(prefs.getBoolean("settings", false)){
-            Log.d(TAG,"SettingsStart");
             SharedPreferences.Editor editor = prefs.edit();
             editor.clear();
             editor.commit();
@@ -87,7 +74,6 @@ public class MainActivity extends Activity {
                 else if(pos==5) {competitionURL="http://www.toernooi.nl/sport/teams.aspx?id=0ECD0EBE-8016-4A99-812C-EF0A20D03089"; compSelected=true;} //21.00-22.00
                 else if(pos==6) {competitionURL="http://www.toernooi.nl/sport/teams.aspx?id=DEC55908-B9B3-4E37-8258-F335EB6C8136"; compSelected=true;} //22.00-23.00
 
-
                 if(compSelected){
                     CompetitionTask = new MyCompetitionTask();
                     CompetitionTask.execute(competitionURL);
@@ -110,7 +96,6 @@ public class MainActivity extends Activity {
                 editor.putInt("chosenTeamNumber",pos-1);
                 editor.commit();
 
-
                 TeamNumber = pos;
 
                 if(TeamNumber!=0) {
@@ -130,14 +115,10 @@ public class MainActivity extends Activity {
         sItems.setAdapter(adapter);
     }
 
-
-    ///////////////////////////////////////////////////////////////////////
     class MyCompetitionTask extends AsyncTask<String, Void, Document> {
         ProgressDialog progress;
         Document doc;
         Elements table;
-        Elements tablebody;
-        String what1="failed";
 
         @Override
         protected void onPreExecute() {
@@ -150,7 +131,6 @@ public class MainActivity extends Activity {
         }
 
         protected Document doInBackground(String... params) {
-            // TimeUnit.SECONDS.sleep(2);
             String url=params[0];
             try {
                 doc = Jsoup.connect(url).get();
@@ -191,16 +171,11 @@ public class MainActivity extends Activity {
         }
     }
 
-    ///////////////////////////////////////////////////////////////////////
     class MyTeamTask extends AsyncTask<String, Void, Document> {
-        ProgressDialog progress;
         Document doc;
         Elements table;
-        Elements tablebody;
-        String what1="failed";
 
         protected Document doInBackground(String... params) {
-            // TimeUnit.SECONDS.sleep(2);
             String url=params[0];
             try {
                 doc = Jsoup.connect(url).get();
@@ -215,11 +190,10 @@ public class MainActivity extends Activity {
         protected void onPostExecute(Document result) {
             super.onPostExecute(result);
 
-            String teamPageURL = "ERROR";
             Elements tablebody;
             tablebody = result.select("td:nth-last-child(2n) a");
 
-            teamPageURL = tablebody.get(TeamNumber-1).attr("href");
+            String teamPageURL = tablebody.get(TeamNumber-1).attr("href");
 
             String basePart = "http://www.toernooi.nl";
             String compPart = teamPageURL.substring(0,57);
@@ -268,5 +242,3 @@ public class MainActivity extends Activity {
 //        return super.onOptionsItemSelected(item);
 //    }
 }
-
-//Toast.makeText(getApplicationContext(), url, Toast.LENGTH_LONG).show();

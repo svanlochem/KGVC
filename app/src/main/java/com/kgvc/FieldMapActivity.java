@@ -9,7 +9,6 @@ import android.content.pm.ActivityInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ImageView;
@@ -40,7 +39,7 @@ public class FieldMapActivity extends Activity {
         setContentView(R.layout.field_map);
 
         prefs = PreferenceManager.getDefaultSharedPreferences(this);
-        setTitle(prefs.getString("chosenTeamName", "ERROR!!"));
+        setTitle(prefs.getString("chosenTeamName", "ERROR!!") + " - Plattegrond");
 
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
@@ -114,22 +113,22 @@ public class FieldMapActivity extends Activity {
         return new int[] {left,top};
     }
 
-    ///////////////////
     class MyTask extends AsyncTask<String, Void, Document> {
         ProgressDialog progress;
         Document doc;
         Elements table;
-        Elements tablebody;
-        String what1="failed";
 
-//        @Override
-//        protected void onPreExecute() {
-//            super.onPreExecute();
-//
-//        }
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            progress = new ProgressDialog(mSingleton);
+            progress.setTitle("Loading");
+            progress.setMessage("Programma laden...");
+            progress.setCancelable(true);
+            progress.show();
+        }
 
         protected Document doInBackground(String... params) {
-            // TimeUnit.SECONDS.sleep(2);
             String url=params[0];
             try {
                 doc = Jsoup.connect(url).get();
@@ -143,13 +142,12 @@ public class FieldMapActivity extends Activity {
 
         protected void onPostExecute(Document result) {
             super.onPostExecute(result);
+            progress.dismiss();
 
             String Field = "";
 
             Elements tablebody;
-
             tablebody   = result.select("table~table > tbody > tr");
-
 
             ListIterator<Element> rowIt = tablebody.listIterator();
             for (int i = 0; i < 20; i++) {
@@ -190,7 +188,6 @@ public class FieldMapActivity extends Activity {
 
         }
     }
-    /////////////////////////////////
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -217,11 +214,11 @@ public class FieldMapActivity extends Activity {
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(intent);
                 return true;}
-//            case R.id.weekuitslagen:{
-//                Intent intent = new Intent(this, WeekUitslagenActivity.class);
-//                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
-//                startActivity(intent);
-//                return true;}
+            case R.id.weekuitslagen:{
+                Intent intent = new Intent(this, WeekUitslagenActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent);
+                return true;}
             case R.id.settings:{
                 SharedPreferences.Editor editor = prefs.edit();
                 editor.putBoolean("settings", true);
