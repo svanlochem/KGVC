@@ -51,6 +51,21 @@ public class MainActivity extends Activity {
 
         prefs = PreferenceManager.getDefaultSharedPreferences(this);
 
+        if(prefs.getBoolean("alreadyChosenTeam",false)) {
+            Log.d(TAG,"ChosenTeamStart");
+            Intent intent = new Intent(MainActivity.this, StandenActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(intent);
+        }
+
+        //If this activity is called using the settings button, remove all team settings in order to let the user to choose another team
+        if(prefs.getBoolean("settings", false)){
+            Log.d(TAG,"SettingsStart");
+            SharedPreferences.Editor editor = prefs.edit();
+            editor.clear();
+            editor.commit();
+        }
+
         mSingleton = this;
 
         ListenerOnCompetitionSpinner();
@@ -219,6 +234,8 @@ public class MainActivity extends Activity {
                 String team =  "team" + Integer.toString(i+1);
                 editor.putString(team,tablebody.get(i).attr("href").substring(62));
             }
+
+            editor.putBoolean("alreadyChosenTeam", true);
 
             editor.commit();
 

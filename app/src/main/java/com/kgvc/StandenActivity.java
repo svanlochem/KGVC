@@ -51,6 +51,9 @@ public class StandenActivity extends Activity {
 
         ScrollLayout = (ScrollView)findViewById(R.id.scrollView1);
 
+        prefs = PreferenceManager.getDefaultSharedPreferences(this);
+        setTitle(prefs.getString("chosenTeamName", "ERROR!!"));
+
         //Create the layout
         TabLayout = new TableLayout(this);
         TabLayout.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, TableRow.LayoutParams.MATCH_PARENT));
@@ -60,7 +63,6 @@ public class StandenActivity extends Activity {
 
         mSingleton = this;
 
-        prefs = PreferenceManager.getDefaultSharedPreferences(this);
         URL = prefs.getString("teamURL", null);
         String URLa = URL.substring(0,29);
         String URLb = URL.substring(33);
@@ -224,8 +226,18 @@ public class StandenActivity extends Activity {
 //                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
 //                startActivity(intent);
 //                return true;}
+            case R.id.settings:{
+                SharedPreferences.Editor editor = prefs.edit();
+                editor.putBoolean("settings", true);
+                editor.putBoolean("alreadyChosenTeam", false);
+                editor.commit();
+                Intent intent = new Intent(this, MainActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent);
+                return true;}
             default:
                 return super.onOptionsItemSelected(item);
+
         }
     }
 }

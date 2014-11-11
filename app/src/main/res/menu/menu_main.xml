@@ -10,4 +10,6 @@
         android:title="Week uitslagen" />
     <item android:id="@+id/fieldmap"
         android:title="Plattegrond velden" />
+    <item android:id="@+id/settings"
+        android:title="Instellingen" />
 </menu>
