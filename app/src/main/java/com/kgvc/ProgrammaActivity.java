@@ -6,22 +6,18 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
+import android.graphics.Color;
+import android.graphics.Typeface;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
-import android.widget.Spinner;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -32,7 +28,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.ListIterator;
 
-public class UitslagenActivity extends Activity {
+public class ProgrammaActivity extends Activity {
     SharedPreferences prefs;
     private static final String TAG = StandenActivity.class.getSimpleName();
 
@@ -40,21 +36,20 @@ public class UitslagenActivity extends Activity {
     ScrollView ScrollLayout;
     TableLayout TabLayout;
     MyTask mt;
-    private Spinner spinner;
-    boolean firstIgnoreSpinner = false;
+
     String URL = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_dropdown_team);
+        setContentView(R.layout.activity_standen);
+
+        prefs = PreferenceManager.getDefaultSharedPreferences(this);
+        setTitle(prefs.getString("chosenTeamName", "ERROR!!"));
 
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
         ScrollLayout = (ScrollView)findViewById(R.id.scrollView1);
-
-        prefs = PreferenceManager.getDefaultSharedPreferences(this);
-        setTitle(prefs.getString("chosenTeamName", "ERROR!!"));
 
         //Create the layout
         TabLayout = new TableLayout(this);
@@ -66,13 +61,10 @@ public class UitslagenActivity extends Activity {
         mSingleton = this;
 
         URL = prefs.getString("teamURL", null);
+
         String URLa = URL.substring(0,29);
         String URLb = URL.substring(33);
-        URL = URLa + "teammatches" + URLb;
-
-        fillTeamSpinner();
-
-        addListenerOnSpinnerItemSelection();
+        URL = URLa + "matches" + URLb;
 
         mt = new MyTask();
         mt.execute(URL);
@@ -86,62 +78,36 @@ public class UitslagenActivity extends Activity {
         ll.getBackground().setAlpha(75);
     }
 
-    private void fillTeamSpinner(){
-        ArrayList<String> teamstr = new ArrayList<String>();
-        for(int i=0;i<prefs.getInt("competitionSize", -1);i++){
-            String teamName = "teamName" + Integer.toString(i+1);
-            teamstr.add(prefs.getString(teamName, null));
+    private TableRow createWeekRow(String[] weekstr) {
+        TableRow row1 = new TableRow(this);
+
+        if(weekstr[0].length()>31) {
+            weekstr[0] = weekstr[0].substring(31, weekstr[0].length());
         }
 
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, teamstr);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        Spinner sItems = (Spinner) findViewById(R.id.spinner2);
-        sItems.setAdapter(adapter);
-    }
-
-    private void addListenerOnSpinnerItemSelection() {
-        spinner = (Spinner) findViewById(R.id.spinner2);
-
-        spinner.setSelection(prefs.getInt("chosenTeamNumber", -1));
-
-        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            public void onItemSelected(AdapterView<?> parent, View view, int pos,long id) {
-
-                if(firstIgnoreSpinner) {
-                    changeTeam(pos);
-                }
-                else {
-                    firstIgnoreSpinner = true;
-                }
-            }
-
-            public void onNothingSelected(AdapterView<?> arg0) {    }
-        });
-    }
-
-    public void changeTeam(int pos){
-        String teamID = "team" + Integer.toString(pos+1);
-        String TeamNumber = prefs.getString(teamID, null);
-        String URLa = URL.substring(0,90);
-        URL = URLa + TeamNumber;
-        Log.d(TAG, URL);
-
-        TabLayout.removeAllViews();
-
-        mt = new MyTask();
-        mt.execute(URL);
+        for (int i = 0; i < weekstr.length; i++) {
+            TextView t1 = new TextView(this);
+            t1.setPadding(10, 0, 10, 0);
+            t1.setTypeface(null, Typeface.BOLD);
+            t1.setText(weekstr[i]);
+            row1.addView(t1);
+        }
+        return row1;
     }
 
     private TableRow createHeaderRow(String[] headerstr) {
         TableRow row1 = new TableRow(this);
 
-        headerstr[1] = "Datum";
-        headerstr[4] = "";
+        if(headerstr.length > 4) {
+            headerstr[4] = "";
+            headerstr[5] = "";
+        }
 
         for (int i = 0; i < headerstr.length; i++) {
-            if(i!=0 && i!=2) {
+            if(i!=0 && i!=1 && i!=2) {
                 TextView t1 = new TextView(this);
                 t1.setPadding(10, 0, 10, 0);
+                t1.setTypeface(null, Typeface.BOLD);
                 t1.setText(headerstr[i]);
                 row1.addView(t1);
             }
@@ -152,15 +118,39 @@ public class UitslagenActivity extends Activity {
     private TableRow createRow(String[] headerstr) {
         TableRow row1 = new TableRow(this);
 
-        headerstr[1]=headerstr[1].substring(3,headerstr[1].length()-6);
+        String FirstPart  = "ERROR";
+        String SecondPart = "ERROR";
+
+        if(headerstr[7].contains("Voetbal")) {
+            FirstPart = headerstr[7].substring(16, headerstr[7].length()-7);
+            SecondPart = headerstr[7].substring(28, headerstr[7].length());
+        }
+
+        if(headerstr[7].contains("Hockey")) {
+            FirstPart = headerstr[7].substring(16, headerstr[7].length()-7);
+            SecondPart = headerstr[7].substring(27, headerstr[7].length());
+        }
+
+        headerstr[7]=FirstPart + " " +SecondPart;
         if(headerstr[3].length() > 15) {headerstr[3] = headerstr[3].substring(0, 15); }
         if(headerstr[5].length() > 15) {headerstr[5] = headerstr[5].substring(0, 15); }
 
+        boolean makeBold;
+        if(headerstr[3].contains("FC uit de Goot") || headerstr[5].contains("FC uit de Goot")) {
+            makeBold = true;
+        } else {
+            makeBold = false;
+        }
+
         for (int i = 0; i < headerstr.length; i++) {
-            if(i!=0 && i!=2) {
+            if(i!=0 && i!=1 && i!=2) {
                 TextView t1 = new TextView(this);
                 t1.setPadding(10, 0, 10, 0);
                 t1.setText(headerstr[i]);
+                if(makeBold) {
+                    t1.setTypeface(null, Typeface.BOLD);
+                    t1.setTextColor(Color.RED);
+                }
                 row1.addView(t1);
             }
         }
@@ -179,7 +169,7 @@ public class UitslagenActivity extends Activity {
             super.onPreExecute();
             progress = new ProgressDialog(mSingleton);
             progress.setTitle("Loading");
-            progress.setMessage("Uitslagen laden...");
+            progress.setMessage("Programma laden...");
             progress.setCancelable(true);
             progress.show();
         }
@@ -202,10 +192,27 @@ public class UitslagenActivity extends Activity {
             //tvInfo.setText(result.text());
             progress.dismiss();
 
+            Elements tableweek;
             Elements tableheader;
             Elements tablebody;
-            tableheader = result.select("table > thead > tr > td");
-            tablebody   = result.select("table > tbody > tr");
+
+            tableweek   = result.select("table~table > caption");
+            tableheader = result.select("table~table > thead > tr > td");
+            tablebody   = result.select("table~table > tbody > tr");
+
+            ArrayList<String> week = new ArrayList<String>();
+            ListIterator<Element> weekIt = tableweek.listIterator();
+            for(int i = 0; i < 10; i++){
+                if(weekIt.hasNext()){
+                    week.add(weekIt.next().text());
+                }
+            }
+
+            String[] weekstr = new String[week.size()];
+            week.toArray(weekstr);
+            TabLayout.addView(createWeekRow(weekstr));
+
+
 
             ArrayList<String> header = new ArrayList<String>();
             ListIterator<Element> postIt = tableheader.listIterator();
@@ -214,6 +221,9 @@ public class UitslagenActivity extends Activity {
                     header.add(postIt.next().text());
                 }
             }
+            //Add header fields
+            header.add("");
+            header.add("Veld");
 
             String[] headerstr = new String[header.size()];
             header.toArray(headerstr);
@@ -239,6 +249,7 @@ public class UitslagenActivity extends Activity {
         }
     }
 
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -254,8 +265,8 @@ public class UitslagenActivity extends Activity {
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(intent);
                 return true;}
-            case R.id.programma:{
-                Intent intent = new Intent(this, ProgrammaActivity.class);
+            case R.id.uitslagen:{
+                Intent intent = new Intent(this, UitslagenActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(intent);
                 return true;}
