@@ -32,6 +32,7 @@ public class FieldMapActivity extends Activity {
     MyTask mt;
 
     String URL = "";
+    String teamName = "";
     double scaleFactor = 0.00;
 
     @Override
@@ -40,7 +41,8 @@ public class FieldMapActivity extends Activity {
         setContentView(R.layout.field_map);
 
         prefs = PreferenceManager.getDefaultSharedPreferences(this);
-        setTitle(prefs.getString("chosenTeamName", "ERROR!!") + " - Plattegrond");
+        teamName = prefs.getString("chosenTeamName", "ERROR!!");
+        setTitle(teamName + " - Plattegrond");
 
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
@@ -174,7 +176,7 @@ public class FieldMapActivity extends Activity {
                     String[] rowstr = new String[row.size()];
                     row.toArray(rowstr);
 
-                    if(rowstr[3].contains("FC uit de Goot") || rowstr[5].contains("FC uit de Goot")){
+                    if(rowstr[3].contains(teamName) || rowstr[5].contains(teamName)){
                         Field = rowstr[7].substring(16,17) + rowstr[7].substring(rowstr[7].length()-2);
 
                         int[] location = getFieldLoc(Field);
