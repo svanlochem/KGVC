@@ -47,7 +47,7 @@ public class StandenActivity extends Activity {
 
         ScrollLayout = (ScrollView)findViewById(R.id.scrollView1);
 
-        prefs = PreferenceManager.getDefaultSharedPreferences(this);
+        prefs = getSharedPreferences(SplashScreen.PREFS_NAME,0);
         setTitle(prefs.getString("chosenTeamName", "ERROR!!") + " - Stand");
 
         //Create the layout

@@ -33,14 +33,13 @@ public class FieldMapActivity extends Activity {
 
     String URL = "";
     String teamName = "";
-    double scaleFactor = 0.00;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.field_map);
 
-        prefs = PreferenceManager.getDefaultSharedPreferences(this);
+        prefs = getSharedPreferences(SplashScreen.PREFS_NAME,0);
         teamName = prefs.getString("chosenTeamName", "ERROR!!");
         setTitle(teamName + " - Plattegrond");
 
@@ -72,55 +71,47 @@ public class FieldMapActivity extends Activity {
         int left   = 0;
         int top    = 0;
 
+        Field = "H3B";
+
         if(Field.equals("H1A")) {//Hockey 1A
-            left   = 575;
-            top    = -550;
-            scaleFactor = 0.40;
+            left   = 605;
+            top    = 250;
         }
         else if(Field.equals("H1B")) {//Hockey 1B
-            left   = 575;
-            top    = 70;
-            scaleFactor = 0.40;
+            left   = 605;
+            top    = 550;
         }
         else if(Field.equals("H2A")) {//Hockey 2A
-            left   = 125;
-            top    = -550;
-            scaleFactor = 0.12;
+            left   = 380;
+            top    = 250;
         }
         else if(Field.equals("H2B")) {//Hockey 2B
-            left    = 130;
-            top     = 70;
-            scaleFactor = 0.12;
+            left    = 400;
+            top     = 550;
         }
         else if(Field.equals("H3A")) {//Hockey 3A
-            left   = 550;
-            top    = 550;
-            scaleFactor = 0.35;
+            left   = 600;
+            top    = 820;
         }
         else if(Field.equals("H3B")) {//Hockey 3B
-            left   = 550;
-            top    = 820;
-            scaleFactor = 0.35;
+            left   = 600;
+            top    = 920;
         }
         else if(Field.equals("V1A")) {//Voetbal 1A
-            left   = -360;
-            top    = -680;
-            scaleFactor = 0.07;
+            left   = 140;
+            top    = 200;
         }
         else if(Field.equals("V1B")) {//Voetbal 1B
-            left   = -375;
-            top    = 70;
-            scaleFactor = 0.07;
+            left   = 130;
+            top    = 550;
         }
         else if(Field.equals("V2A")) {//Voetbal 2A
-            left   = 160;
-            top    = 700;
-            scaleFactor = 0.17;
+            left   = 400;
+            top    = 870;
         }
         else if(Field.equals("V2B")) {//Voetbal 2B
-            left   = -400;
-            top    = 700;
-            scaleFactor = 0.17;
+            left   = 110;
+            top    = 870;
         }
         return new int[] {left,top};
     }
@@ -188,8 +179,6 @@ public class FieldMapActivity extends Activity {
                         parameters.topMargin  = location[1];
 
                         icon.setLayoutParams(parameters);
-                        icon.setScaleX((float) scaleFactor);
-                        icon.setScaleY((float) scaleFactor);
                         icon.bringToFront();
                         icon.setVisibility(ImageView.VISIBLE);
 

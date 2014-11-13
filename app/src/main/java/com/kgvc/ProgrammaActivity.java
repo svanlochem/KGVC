@@ -44,7 +44,7 @@ public class ProgrammaActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_standen);
 
-        prefs = PreferenceManager.getDefaultSharedPreferences(this);
+        prefs = getSharedPreferences(SplashScreen.PREFS_NAME,0);
         chosenTeam = prefs.getString("chosenTeamName", "ERROR!!");
         setTitle(chosenTeam + " - Programma");
 

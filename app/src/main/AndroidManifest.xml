@@ -1,8 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.kgvc" >
+    package="com.kgvc"
+    android:versionCode="3"
+    android:versionName="1.2.5" >
 
     <uses-sdk
-        android:minSdkVersion="14"
+        android:minSdkVersion="15"
         android:targetSdkVersion="19" />
     <uses-permission android:name="android.permission.INTERNET"/>
 
@@ -14,6 +17,7 @@
         <activity
             android:name="com.kgvc.SplashScreen"
             android:label="@string/app_name"
+            android:screenOrientation="portrait"
             android:launchMode="singleTop"
             android:noHistory="true">
             <intent-filter>
@@ -23,22 +27,27 @@
         </activity>
         <activity
             android:name="com.kgvc.MainActivity"
+            android:screenOrientation="portrait"
             android:label="@string/app_name"
             android:noHistory="true">
         </activity>
         <activity android:name="com.kgvc.StandenActivity"
+            android:screenOrientation="portrait"
             android:noHistory="true">
         </activity>
         <activity android:name="com.kgvc.UitslagenActivity"
+            android:screenOrientation="portrait"
             android:noHistory="true">
         </activity>
         <activity android:name="com.kgvc.FieldMapActivity"
             android:noHistory="true">
         </activity>
         <activity android:name="com.kgvc.ProgrammaActivity"
+            android:screenOrientation="portrait"
             android:noHistory="true">
         </activity>
         <activity android:name="com.kgvc.WeekUitslagenActivity"
+            android:screenOrientation="portrait"
             android:noHistory="true">
         </activity>
     </application>

@@ -51,7 +51,7 @@ public class WeekUitslagenActivity  extends Activity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dropdown);
 
-        prefs = PreferenceManager.getDefaultSharedPreferences(this);
+        prefs = getSharedPreferences(SplashScreen.PREFS_NAME,0);
         chosenTeam = prefs.getString("chosenTeamName", "ERROR!!");
         setTitle(chosenTeam + " - Week Uitslagen");
 
@@ -214,7 +214,6 @@ public class WeekUitslagenActivity  extends Activity{
             dateURL = "20141215";
         }
 
-        prefs = PreferenceManager.getDefaultSharedPreferences(this);
         URL = prefs.getString("teamURL", null);
 
         String URLa = URL.substring(0,29);

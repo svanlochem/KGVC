@@ -3,6 +3,7 @@ package com.kgvc;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.Window;
@@ -13,7 +14,7 @@ public class SplashScreen extends Activity {
     SharedPreferences prefs;
 
     /** Duration of wait **/
-    private final int SPLASH_DISPLAY_LENGTH = 1500;
+    private final int SPLASH_DISPLAY_LENGTH = 4000;
 
     /** Called when the activity is first created. */
     @Override
@@ -21,6 +22,8 @@ public class SplashScreen extends Activity {
         super.onCreate(icicle);
         this.requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.splash_screen);
+
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
         setQuote();
         prefs = getSharedPreferences(PREFS_NAME,0);
@@ -46,6 +49,9 @@ public class SplashScreen extends Activity {
     }
 
     private void setQuote(){
+//        prefs = PreferenceManager.getDefaultSharedPreferences(this);
+//        dayofyear%40;
+//        Day of the year modulus (%) amount of quotes
 
         TextView tv1 = (TextView)findViewById(R.id.quotetextView);
         tv1.setText("\"Hij zat er allang in voor het buitenspel was\" - Roel de Koning");

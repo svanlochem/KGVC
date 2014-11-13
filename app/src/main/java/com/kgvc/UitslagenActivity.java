@@ -50,7 +50,7 @@ public class UitslagenActivity extends Activity {
 
         ScrollLayout = (ScrollView)findViewById(R.id.scrollView1);
 
-        prefs = PreferenceManager.getDefaultSharedPreferences(this);
+        prefs = getSharedPreferences(SplashScreen.PREFS_NAME,0);
         setTitle(prefs.getString("chosenTeamName", "ERROR!!") + " - Team Uitslagen");
 
         //Create the layout
