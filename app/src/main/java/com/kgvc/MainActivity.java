@@ -40,19 +40,6 @@ public class MainActivity extends Activity {
 
         prefs = PreferenceManager.getDefaultSharedPreferences(this);
 
-        if(prefs.getBoolean("alreadyChosenTeam",false)) {
-            Intent intent = new Intent(MainActivity.this, StandenActivity.class);
-            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
-            startActivity(intent);
-        }
-
-        //If this activity is called using the settings button, remove all team settings in order to let the user to choose another team
-        if(prefs.getBoolean("settings", false)){
-            SharedPreferences.Editor editor = prefs.edit();
-            editor.clear();
-            editor.commit();
-        }
-
         mSingleton = this;
 
         ListenerOnCompetitionSpinner();
