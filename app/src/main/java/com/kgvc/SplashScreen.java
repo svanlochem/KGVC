@@ -5,14 +5,15 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
-import android.preference.PreferenceManager;
 import android.view.Window;
+import android.widget.TextView;
 
 public class SplashScreen extends Activity {
+    public static final String PREFS_NAME = "appSettings";
     SharedPreferences prefs;
 
     /** Duration of wait **/
-    private final int SPLASH_DISPLAY_LENGTH = 1000;
+    private final int SPLASH_DISPLAY_LENGTH = 1500;
 
     /** Called when the activity is first created. */
     @Override
@@ -21,7 +22,8 @@ public class SplashScreen extends Activity {
         this.requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.splash_screen);
 
-        prefs = PreferenceManager.getDefaultSharedPreferences(this);
+        setQuote();
+        prefs = getSharedPreferences(PREFS_NAME,0);
 
         /* New Handler to start the Menu-Activity
          * and close this Splash-Screen after some seconds.*/
@@ -33,20 +35,20 @@ public class SplashScreen extends Activity {
                     Intent intent = new Intent(SplashScreen.this, StandenActivity.class);
                     intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
                     startActivity(intent);
+                } else {
+                    Intent intent = new Intent(SplashScreen.this, MainActivity.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+                    SplashScreen.this.startActivity(intent);
+                    SplashScreen.this.finish();
                 }
-
-                //If this activity is called using the settings button, remove all team settings in order to let the user to choose another team
-                if(prefs.getBoolean("settings", false)){
-                    SharedPreferences.Editor editor = prefs.edit();
-                    editor.clear();
-                    editor.commit();
-                }
-                                
-                Intent intent = new Intent(SplashScreen.this, StandenActivity.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
-                SplashScreen.this.startActivity(intent);
-                SplashScreen.this.finish();
             }
         }, SPLASH_DISPLAY_LENGTH);
+    }
+
+    private void setQuote(){
+
+        TextView tv1 = (TextView)findViewById(R.id.quotetextView);
+        tv1.setText("\"Hij zat er allang in voor het buitenspel was\" - Roel de Koning");
+
     }
 }

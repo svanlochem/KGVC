@@ -59,7 +59,7 @@ public class StandenActivity extends Activity {
 
         mSingleton = this;
 
-        URL = prefs.getString("teamURL", null);
+        URL = prefs.getString("teamURL", "");
         String URLa = URL.substring(0,29);
         String URLb = URL.substring(33);
         URL = URLa + "teamstandings" + URLb;

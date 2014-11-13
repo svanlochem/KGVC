@@ -7,7 +7,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.view.Menu;
 import android.view.View;
 import android.widget.AdapterView;
@@ -38,7 +37,14 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        prefs = PreferenceManager.getDefaultSharedPreferences(this);
+        prefs = getSharedPreferences(SplashScreen.PREFS_NAME,0);
+
+        //If this activity is called using the settings button, remove all team settings in order to let the user to choose another team
+        if(prefs.getBoolean("settings", false)){
+            SharedPreferences.Editor editor = prefs.edit();
+            editor.clear();
+            editor.commit();
+        }
 
         mSingleton = this;
 
@@ -133,8 +139,9 @@ public class MainActivity extends Activity {
             super.onPostExecute(result);
             progress.dismiss();
 
-            SharedPreferences.Editor editor = prefs.edit();
+//            SharedPreferences.Editor editor = prefs.edit();
             Elements tablebody;
+            SharedPreferences.Editor editor = prefs.edit();
 
             tablebody   = result.select("table > tbody > tr > td:eq(0)");
 

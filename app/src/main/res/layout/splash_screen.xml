@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="fill_parent"
     android:layout_height="fill_parent">
 
@@ -7,10 +7,17 @@
         android:layout_width="match_parent"
         android:layout_height="fill_parent"
         android:src="@drawable/logo_kgvc"
-        android:layout_gravity="center"/>
+        android:layout_gravity="center"
+        android:layout_marginTop="-200px" />
 
-    <TextView android:layout_width="fill_parent"
+    <TextView
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Hello World, splash"/>
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Medium Text"
+        android:id="@+id/quotetextView"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="45dp" />
 
-</LinearLayout>
+</RelativeLayout>
