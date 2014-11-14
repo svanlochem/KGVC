@@ -57,7 +57,6 @@ public class FieldMapActivity extends Activity {
         mt.execute(URL);
     }
 
-
     @Override
     protected void onResume(){
         super.onResume();
@@ -70,8 +69,6 @@ public class FieldMapActivity extends Activity {
 
         int left   = 0;
         int top    = 0;
-
-        Field = "H3B";
 
         if(Field.equals("H1A")) {//Hockey 1A
             left   = 605;
