@@ -8,8 +8,8 @@ android {
         applicationId "com.kgvc"
         minSdkVersion 15
         targetSdkVersion 20
-        versionCode 3
-        versionName "1.2.5"
+        versionCode 4
+        versionName "1.2.6"
     }
     buildTypes {
         release {
