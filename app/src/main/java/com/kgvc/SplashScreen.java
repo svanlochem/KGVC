@@ -7,17 +7,41 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
+import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.MotionEvent;
+import android.view.View;
 import android.view.Window;
+import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import org.jsoup.nodes.Document;
+
+import java.io.BufferedInputStream;
+import java.io.BufferedReader;
+import java.io.ByteArrayOutputStream;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.ProtocolException;
+import java.net.URL;
 import java.text.SimpleDateFormat;
 
 public class SplashScreen extends Activity {
     public static final String PREFS_NAME = "appSettings";
     SharedPreferences prefs;
+    MyTask mt;
+    String latestVersion = "";
+    String packageName = "";
 
     // flag for Internet connection status
     Boolean isInternetPresent = false;
@@ -37,17 +61,25 @@ public class SplashScreen extends Activity {
 
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
+        packageName = getCurrentVersion();
+        TextView tv2 = (TextView)findViewById(R.id.VersionNumbertextView);
+        tv2.setText("Versie: " + packageName);
+
+        mt = new MyTask();
+        mt.execute();
+
         setQuote();
+
         prefs = getSharedPreferences(PREFS_NAME,0);
 
-        /* New Handler to start the Menu-Activity
-         * and close this Splash-Screen after some seconds.*/
-        new Handler().postDelayed(new Runnable(){
-            @Override
-            public void run() {
-                chooseActivity();
-            }
-        }, SPLASH_DISPLAY_LENGTH);
+//        /* New Handler to start the Menu-Activity
+//         * and close this Splash-Screen after some seconds.*/
+//        new Handler().postDelayed(new Runnable(){
+//            @Override
+//            public void run() {
+//                chooseActivity();
+//            }
+//        }, SPLASH_DISPLAY_LENGTH);
     }
 
     @Override
@@ -100,6 +132,55 @@ public class SplashScreen extends Activity {
         tv1.setText(quotes[Days%arrayLength]);
     }
 
+    private void checkVersion(){
+        boolean updateAvailable = false;
+
+        int latesta = Integer.parseInt(latestVersion.substring(0,1));
+        int latestb = Integer.parseInt(latestVersion.substring(2,3));
+        int latestc = Integer.parseInt(latestVersion.substring(4));
+
+        int currenta = Integer.parseInt(packageName.substring(0,1));
+        int currentb = Integer.parseInt(packageName.substring(2,3));
+        int currentc = Integer.parseInt(packageName.substring(4));
+
+        if (latesta > currenta){ updateAvailable = true;}
+        else if (latestb > currentb){ updateAvailable = true;}
+        else if (latestc > currentc){ updateAvailable = true;}
+
+        if(updateAvailable){
+            View b = findViewById(R.id.button);
+            b.setVisibility(View.VISIBLE);
+            b.setOnClickListener(new View.OnClickListener(){
+
+                @Override
+                public void onClick(View v) {
+                startActivity(new Intent(Intent.ACTION_VIEW).setData(Uri.parse("https://www.dropbox.com/s/7peizo64ticwcgz/KGVC.apk?dl=0")));
+                }
+            });
+        }
+    }
+
+    public void onClick(View v)
+    {
+        //handle the click events here, in this case open www.google.com with the default browser
+        startActivity(new Intent(Intent.ACTION_VIEW).setData(Uri.parse("http://www.google.com")));
+        finish();
+        moveTaskToBack(true);
+    }
+
+    private String getCurrentVersion(){
+        String packageName = "";
+
+        try {
+            packageName = this.getPackageManager().getPackageInfo(getPackageName(), 0).versionName;
+
+        } catch (PackageManager.NameNotFoundException e){
+                Log.w("NameNotFoundException","Error",e);
+        }
+
+        return packageName;
+    }
+
     public void showAlertDialog(Context context, String title, String message, Boolean status) {
         AlertDialog alertDialog = new AlertDialog.Builder(context).create();
 
@@ -111,5 +192,50 @@ public class SplashScreen extends Activity {
 
         // Showing Alert Message
         alertDialog.show();
+    }
+
+    private class MyTask extends AsyncTask<String, Void, String> {
+        @Override
+        protected String doInBackground(String... urls) {
+
+            String path ="https://www.dropbox.com/s/olr7mcoaizy3yue/mostRecentVersion.txt?dl=1";
+            URL u = null;
+            try {
+                u = new URL(path);
+                HttpURLConnection c = (HttpURLConnection) u.openConnection();
+                c.setRequestMethod("GET");
+                c.connect();
+                InputStream in = c.getInputStream();
+                final ByteArrayOutputStream bo = new ByteArrayOutputStream();
+                byte[] buffer = new byte[1024];
+                in.read(buffer); // Read from Buffer.
+                bo.write(buffer); // Write Into Buffer.
+
+                latestVersion = bo.toString().substring(0, 5);
+
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            } catch (ProtocolException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            return latestVersion;
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+//            textView.setText(result);
+            checkVersion();
+                    /* New Handler to start the Menu-Activity
+         * and close this Splash-Screen after some seconds.*/
+            new Handler().postDelayed(new Runnable(){
+                @Override
+                public void run() {
+                    chooseActivity();
+                }
+            }, SPLASH_DISPLAY_LENGTH);
+        }
     }
 }
