@@ -42,9 +42,10 @@
 
     <string-array name="quotes">
         <item>\"Meedoen is belangrijker dan winnen, maar je moet vaak genoeg winnen om echt mee te doen\" - Roel de Koning</item>
-        <item>(Over Arjen Robben.) "Hij heeft altijd wel zo'n gezicht alsof ie in z'n broek gescheten heeft\" - René van der Gijp</item>
+        <item>(Over Arjen Robben) \"Hij heeft altijd wel zo\'n gezicht alsof ie in z\'n broek gescheten heeft\" - René van der Gijp</item>
         <item>\"Of ik verder nog iets opgestoken heb op de trainerscursus? Ja, een paar sigaretten.\" - Willem van Hanegem</item>
         <item>\"Je moet de lat niet te hoog leggen, maar dan moet je wel laag schieten\" - Roel de Koning</item>
+        <item>\"Ich Schlafe immer löffel an löffel\" - Louis van Gaal</item>
         <item>\"In het leven bestaan twee zekerheden: iedereen gaat dood en een trainer wordt ontslagen.\" - Aad de Mos</item>
         <item>\"Strafschoppen zou ik het liefst koppend willen nemen.\" - John Bosman</item>
         <item>\"Je gaat het pas zien als je het doorhebt." - Johan Cruijff</item>
@@ -53,18 +54,22 @@
         <item>\"Als speler hoefden ze me na een doelpunt nooit achterna te rennen. Daar had ik de snelheid niet voor.\" - Willem van Hanegem</item>
         <item>\"Als ik een bal aan de voet heb die ik wil afspelen, dan moet ik rekening houden met mijn bewaker, de wind, het gras, de snelheid waarmee de spelers lopen. Wij berekenen de kracht waarmee je moet schoppen en de richting waarin in ééntiende seconde. Een computer doet daar twee minuten over!\" - Johan Cruijff</item>
         <item>\"Een uitslag is altijd terecht, of het nou verdiend is of onverdiend\" - Alex Pastoor</item>
+        <item>\"That\'s another cook\" - Louis van Gaal</item>
         <item>(tijdens hooghouden) \"Hij mag één keer stuiteren, we zijn de selectie niet\" - Roel de Koning</item>
         <item>\"Van Sno heb ik het gevoel dat hij op een roltrap loopt, hij beweegt wel maar hij gaat niet vooruit\" - René van der Gijp</item>
         <item>\"Ik ben blij dat het weer goed gaat met Feyenoord. Ik heb hier toch een paar jaar op de tribune gezeten en dan was ik al tevreden als we de toss wonnen.\" - Jan Linssen</item>
         <item>\"Voetballen is simpel, maar het moeilijkste wat er is, is simpel voetballen\" - Johan Cruijff</item>
         <item>\"Uit twee grote wedstrijden 1 punt, hadden er vier meer moeten zijn\" - Ronald Koeman</item>
+        <item>\"It\'s again the same song\" - Louis van Gaal</item>
         <item>\"De dug-out van PSV lijkt soms op een hondenkennel, zoveel wordt er richting veld geblaft\" - René van der Gijp</item>
         <item>\"Hij zat er allang in voor het buitenspel was\" - Roel de Koning</item>
         <item>\"Voordat ik een fout maak, maak ik die fout niet\" - Johan Cruijff</item>
+        <item>\"We did always the light out\" - Louis van Gaal</item>
         <item>"Ik heb veel geld uitgegeven aan alcohol, vrouwen en snelle auto's. De rest heb ik gewoon verbrast\" -George Best</item>
         <item>\"(Over Feyenoord-spits Jhonny van Beukering.) Die Van Beukering wordt nog ingehaald door iemand die de lijnen aan het kalken is op de training. Dat kan toch niet!\" - René van der Gijp</item>
         <item>\"Wat is snelheid? Vaak verwisselt de sportpers snelheid met inzicht. Kijk, als ik iets eerder begin te lopen dan een ander, dan lijk ik sneller.\" - Johan Cruijff</item>
-        <item>\"(Na het ontslag van Dick Advocaat bij Zenith:) Hij moet al vier keer heen en weer vliegen om dat geld hier heen te krijgen\" - René van der Gijp</item>
+        <item>\"Ik win liever slecht dan winnend verliezen\" - Frank de Boer</item>
+        <item>(Na het ontslag van Dick Advocaat bij Zenith:) \"Hij moet al vier keer heen en weer vliegen om dat geld hier heen te krijgen\" - René van der Gijp</item>
     </string-array>
 
 </resources>

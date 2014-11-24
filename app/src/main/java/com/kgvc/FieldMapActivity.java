@@ -69,60 +69,60 @@ public class FieldMapActivity extends Activity {
         rl.getBackground().setAlpha(75);
     }
 
-    public double[] getFieldLoc (String Field){
+    public int[] getFieldLoc (String Field){
 
-        Display display = getWindowManager().getDefaultDisplay();
-        Point size = new Point();
-        display.getSize(size);
-        double ScreenWidth = size.x;
-        double ScreenHeight = size.y;
-        double baseScreenX = 424;
-        double baseScreenY = 583;
+//        Display display = getWindowManager().getDefaultDisplay();
+//        Point size = new Point();
+//        display.getSize(size);
+//        double ScreenWidth = size.x;
+//        double ScreenHeight = size.y;
+//        double baseScreenX = 424;
+//        double baseScreenY = 583;
 
-        double left   = 0;
-        double top    = 0;
+        int left   = 0;
+        int top    = 0;
 
         if(Field.equals("H1A")) {//Hockey 1A
-            left   = (605/baseScreenX)*ScreenWidth;
-            top    = (250/baseScreenY)*ScreenHeight;
+            left   = 605;
+            top    = 250;
         }
         else if(Field.equals("H1B")) {//Hockey 1B
-            left   = (605/baseScreenX)*ScreenWidth;
-            top    = (550/baseScreenY)*ScreenHeight;
+            left   = 605;
+            top    = 550;
         }
         else if(Field.equals("H2A")) {//Hockey 2A
-            left   = (380/baseScreenX)*ScreenWidth;
-            top    = (250/baseScreenY)*ScreenHeight;
+            left   = 380;
+            top    = 250;
         }
         else if(Field.equals("H2B")) {//Hockey 2B
-            left   = (400/baseScreenX)*ScreenWidth;
-            top    = (550/baseScreenY)*ScreenHeight;
+            left   = 400;
+            top    = 550;
         }
         else if(Field.equals("H3A")) {//Hockey 3A
-            left   = (600/baseScreenX)*ScreenWidth;
-            top    = (820/baseScreenY)*ScreenHeight;
+            left   = 600;
+            top    = 820;
         }
         else if(Field.equals("H3B")) {//Hockey 3B
-            left   = (600/baseScreenX)*ScreenWidth;
-            top    = (920/baseScreenY)*ScreenHeight;
+            left   = 600;
+            top    = 920;
         }
         else if(Field.equals("V1A")) {//Voetbal 1A
-            left   = (140/baseScreenX)*ScreenWidth;
-            top    = (200/baseScreenY)*ScreenHeight;
+            left   = 140;
+            top    = 200;
         }
         else if(Field.equals("V1B")) {//Voetbal 1B
-            left   = (130/baseScreenX)*ScreenWidth;
-            top    = (550/baseScreenY)*ScreenHeight;
+            left   = 130;
+            top    = 550;
         }
         else if(Field.equals("V2A")) {//Voetbal 2A
-            left   = (400/baseScreenX)*ScreenWidth;
-            top    = (870/baseScreenY)*ScreenHeight;
+            left   = 400;
+            top    = 870;
         }
         else if(Field.equals("V2B")) {//Voetbal 2B
-            left   = (110/baseScreenX)*ScreenWidth;
-            top    = (870/baseScreenY)*ScreenHeight;
+            left   = 110;
+            top    = 870;
         }
-        return new double[] {left,top};
+        return new int[] {left,top};
     }
 
     class MyTask extends AsyncTask<String, Void, Document> {
@@ -179,13 +179,13 @@ public class FieldMapActivity extends Activity {
                     if(rowstr[3].contains(teamName) || rowstr[5].contains(teamName)){
                         Field = rowstr[7].substring(16,17) + rowstr[7].substring(rowstr[7].length()-2);
 
-                        double[] location = getFieldLoc(Field);
+                        int[] location = getFieldLoc(Field);
 
                         icon = (ImageView)findViewById(R.id.icon);
                         parameters = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT,RelativeLayout.LayoutParams.WRAP_CONTENT);
 
-                        parameters.leftMargin = (int) location[0];
-                        parameters.topMargin  = (int) location[1];
+                        parameters.leftMargin = location[0];
+                        parameters.topMargin  = location[1];
 
                         icon.setLayoutParams(parameters);
                         icon.bringToFront();
