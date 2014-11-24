@@ -36,6 +36,7 @@ public class SplashScreen extends Activity {
 
     // flag for Internet connection status
     Boolean isInternetPresent = false;
+    Boolean touched = false;
 
     // Connection detector class
     ConnectionDetector cd;
@@ -62,20 +63,12 @@ public class SplashScreen extends Activity {
         setQuote();
 
         prefs = getSharedPreferences(PREFS_NAME,0);
-
-//        /* New Handler to start the Menu-Activity
-//         * and close this Splash-Screen after some seconds.*/
-//        new Handler().postDelayed(new Runnable(){
-//            @Override
-//            public void run() {
-//                chooseActivity();
-//            }
-//        }, SPLASH_DISPLAY_LENGTH);
     }
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         if (event.getAction() == MotionEvent.ACTION_DOWN) {
+            touched = true;
             chooseActivity();
         }
 
@@ -87,7 +80,6 @@ public class SplashScreen extends Activity {
         isInternetPresent = cd.isConnectingToInternet();
 
         if (isInternetPresent) {
-
             if (prefs.getBoolean("alreadyChosenTeam", false)) {
                 Intent intent = new Intent(SplashScreen.this, StandenActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -95,10 +87,10 @@ public class SplashScreen extends Activity {
             } else {
                 Intent intent = new Intent(SplashScreen.this, MainActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
-                SplashScreen.this.startActivity(intent);
-                SplashScreen.this.finish();
+                startActivity(intent);
             }
-        } else {
+        }
+        else {
             AlertDialog alert = new AlertDialog.Builder(SplashScreen.this).create();
             alert.setTitle("Geen internetverbinding!");
             alert.setMessage("Zet je internet aan!");
@@ -151,8 +143,7 @@ public class SplashScreen extends Activity {
         }
     }
 
-    public void onClick(View v)
-    {
+    public void onClick(View v) {
         //handle the click events here, in this case open www.google.com with the default browser
         startActivity(new Intent(Intent.ACTION_VIEW).setData(Uri.parse("http://www.google.com")));
         finish();
@@ -217,16 +208,16 @@ public class SplashScreen extends Activity {
 
         @Override
         protected void onPostExecute(String result) {
-//            textView.setText(result);
             checkVersion();
-                    /* New Handler to start the Menu-Activity
-         * and close this Splash-Screen after some seconds.*/
-            new Handler().postDelayed(new Runnable(){
-                @Override
-                public void run() {
-                    chooseActivity();
-                }
-            }, SPLASH_DISPLAY_LENGTH);
+
+            if(!touched) {
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        chooseActivity();
+                    }
+                }, SPLASH_DISPLAY_LENGTH);
+            }
         }
     }
 }
