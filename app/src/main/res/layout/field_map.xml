@@ -19,6 +19,6 @@
         android:id="@+id/FieldMapImage"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:src="@drawable/field_map"/>
+        android:src="@drawable/fieldmap"/>
 
 </RelativeLayout>
