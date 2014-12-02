@@ -138,6 +138,9 @@ public class SplashScreen extends Activity {
                 @Override
                 public void onClick(View v) {
                 startActivity(new Intent(Intent.ACTION_VIEW).setData(Uri.parse("https://www.dropbox.com/s/7peizo64ticwcgz/KGVC.apk?dl=0")));
+
+                finish();
+                System.exit(0);
                 }
             });
         }
