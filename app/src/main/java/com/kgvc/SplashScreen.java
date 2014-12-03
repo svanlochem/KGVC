@@ -213,14 +213,14 @@ public class SplashScreen extends Activity {
         protected void onPostExecute(String result) {
             checkVersion();
 
-            if(!touched) {
-                new Handler().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        chooseActivity();
-                    }
-                }, SPLASH_DISPLAY_LENGTH);
-            }
+//            if(!touched) {
+//                new Handler().postDelayed(new Runnable() {
+//                    @Override
+//                    public void run() {
+//                        chooseActivity();
+//                    }
+//                }, SPLASH_DISPLAY_LENGTH);
+//            }
         }
     }
 }
