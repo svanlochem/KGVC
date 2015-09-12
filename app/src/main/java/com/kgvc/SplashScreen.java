@@ -115,6 +115,7 @@ public class SplashScreen extends Activity {
         tv1.setText(quotes[Days%arrayLength]);
     }
 
+    //TODO: Find bug in update system
     private void checkVersion(){
         boolean updateAvailable = false;
 

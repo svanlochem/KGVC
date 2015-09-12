@@ -60,12 +60,12 @@ public class MainActivity extends Activity {
 
                 boolean compSelected = false;
 
-                if(pos==1)      {competitionURL="http://www.toernooi.nl/sport/teams.aspx?id=CF40B14B-71BD-413A-9B05-18B99D4890CC"; compSelected=true;} //17.00-18.00
-                else if(pos==2) {competitionURL="http://www.toernooi.nl/sport/teams.aspx?id=5785966C-9644-4CAA-98CF-CBE646B14D8D"; compSelected=true;} //18.00-19.00
-                else if(pos==3) {competitionURL="http://www.toernooi.nl/sport/teams.aspx?id=88BF628B-24D7-4CAA-BBA2-162C938F57E9"; compSelected=true;} //19.00-20.00
-                else if(pos==4) {competitionURL="http://www.toernooi.nl/sport/teams.aspx?id=90E04910-E759-4DD0-96D2-2E2C943406C9"; compSelected=true;} //20.00-21.00
-                else if(pos==5) {competitionURL="http://www.toernooi.nl/sport/teams.aspx?id=0ECD0EBE-8016-4A99-812C-EF0A20D03089"; compSelected=true;} //21.00-22.00
-                else if(pos==6) {competitionURL="http://www.toernooi.nl/sport/teams.aspx?id=DEC55908-B9B3-4E37-8258-F335EB6C8136"; compSelected=true;} //22.00-23.00
+                if(pos==1)      {competitionURL="http://www.toernooi.nl/sport/teams.aspx?id=226F03F4-856F-4DD3-BF1F-CF0BD180D65B"; compSelected=true;} //17.00-18.00
+                else if(pos==2) {competitionURL="http://www.toernooi.nl/sport/teams.aspx?id=1E0B0979-4E31-4E64-8BC3-3770E8720B26"; compSelected=true;} //18.00-19.00
+                else if(pos==3) {competitionURL="http://www.toernooi.nl/sport/teams.aspx?id=CEA1B07A-F14D-4651-A4D9-509712DB0C36"; compSelected=true;} //19.00-20.00
+                else if(pos==4) {competitionURL="http://www.toernooi.nl/sport/teams.aspx?id=FFEE1FE7-F57F-49F2-93DD-C01D796E2828"; compSelected=true;} //20.00-21.00
+                else if(pos==5) {competitionURL="http://www.toernooi.nl/sport/teams.aspx?id=F181A6FB-29A1-4C23-A8CC-B3022948F255"; compSelected=true;} //21.00-22.00
+                else if(pos==6) {competitionURL="http://www.toernooi.nl/sport/teams.aspx?id=52059CF5-0838-4E85-9867-479A33E206B3"; compSelected=true;} //22.00-23.00
 
                 if(compSelected){
                     CompetitionTask = new MyCompetitionTask();

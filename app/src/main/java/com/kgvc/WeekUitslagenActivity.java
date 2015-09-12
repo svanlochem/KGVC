@@ -11,6 +11,7 @@ import android.graphics.Typeface;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -86,55 +87,55 @@ public class WeekUitslagenActivity  extends Activity{
     private void addListenerOnSpinnerItemSelection() {
         spinner = (Spinner) findViewById(R.id.spinner);
 
-        if(URL.substring(84).equals("20140915")) spinner.setSelection(0);
-        else if(URL.substring(84).equals("20140922")) spinner.setSelection(1);
-        else if(URL.substring(84).equals("20140929")) spinner.setSelection(2);
-        else if(URL.substring(84).equals("20141006")) spinner.setSelection(3);
-        else if(URL.substring(84).equals("20141013")) spinner.setSelection(4);
-        else if(URL.substring(84).equals("20141020")) spinner.setSelection(5);
-        else if(URL.substring(84).equals("20141110")) spinner.setSelection(6);
-        else if(URL.substring(84).equals("20141117")) spinner.setSelection(7);
-        else if(URL.substring(84).equals("20141124")) spinner.setSelection(8);
-        else if(URL.substring(84).equals("20141201")) spinner.setSelection(9);
-        else if(URL.substring(84).equals("20141208")) spinner.setSelection(10);
-        else if(URL.substring(84).equals("20141215")) spinner.setSelection(11);
-        else if(URL.substring(84).equals("20150105")) spinner.setSelection(12);
-        else if(URL.substring(84).equals("20150112")) spinner.setSelection(13);
-        else if(URL.substring(84).equals("20150209")) spinner.setSelection(14);
+        if(URL.substring(84).equals("20150921")) spinner.setSelection(0);
+        else if(URL.substring(84).equals("20150928")) spinner.setSelection(1);
+        else if(URL.substring(84).equals("20151005")) spinner.setSelection(2);
+        else if(URL.substring(84).equals("20151012")) spinner.setSelection(3);
+        else if(URL.substring(84).equals("20151019")) spinner.setSelection(4);
+        else if(URL.substring(84).equals("20151109")) spinner.setSelection(5);
+        else if(URL.substring(84).equals("20151116")) spinner.setSelection(6);
+        else if(URL.substring(84).equals("20151123")) spinner.setSelection(7);
+        else if(URL.substring(84).equals("20151130")) spinner.setSelection(8);
+        else if(URL.substring(84).equals("20151207")) spinner.setSelection(9);
+        else if(URL.substring(84).equals("20151214")) spinner.setSelection(10);
+        else if(URL.substring(84).equals("20160104")) spinner.setSelection(11);
+        else if(URL.substring(84).equals("20160111")) spinner.setSelection(12);
+        else if(URL.substring(84).equals("20160208")) spinner.setSelection(13);
+        else if(URL.substring(84).equals("20160215")) spinner.setSelection(14);
 
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            public void onItemSelected(AdapterView<?> parent, View view, int pos,long id) {
+            public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
 
-                if(firstIgnoreSpinner) {
+                if (firstIgnoreSpinner) {
                     changeWeek(pos);
-                }
-                else {
+                } else {
                     firstIgnoreSpinner = true;
                 }
             }
 
-            public void onNothingSelected(AdapterView<?> arg0) {    }
+            public void onNothingSelected(AdapterView<?> arg0) {
+            }
         });
     }
 
     public void changeWeek(int pos){
         String datePart = "";
 
-        if(pos == 0) datePart = "20140915";
-        else if(pos == 1) datePart = "20140922";
-        else if(pos == 2) datePart = "20140929";
-        else if(pos == 3) datePart = "20141006";
-        else if(pos == 4) datePart = "20141013";
-        else if(pos == 5) datePart = "20141020";
-        else if(pos == 6) datePart = "20141110";
-        else if(pos == 7) datePart = "20141117";
-        else if(pos == 8) datePart = "20141124";
-        else if(pos == 9) datePart = "20141201";
-        else if(pos == 10) datePart = "20141208";
-        else if(pos == 11) datePart = "20141215";
-        else if(pos == 12) datePart = "20150105";
-        else if(pos == 13) datePart = "20150112";
-        else if(pos == 14) datePart = "20150209";
+        if(pos == 0) datePart = "20150921";
+        else if(pos == 1) datePart = "20150928";
+        else if(pos == 2) datePart = "20151005";
+        else if(pos == 3) datePart = "20151012";
+        else if(pos == 4) datePart = "20151019";
+        else if(pos == 5) datePart = "20151109";
+        else if(pos == 6) datePart = "20151116";
+        else if(pos == 7) datePart = "20151123";
+        else if(pos == 8) datePart = "20151130";
+        else if(pos == 9) datePart = "20151207";
+        else if(pos == 10) datePart = "20151214";
+        else if(pos == 11) datePart = "20160104";
+        else if(pos == 12) datePart = "20160111";
+        else if(pos == 13) datePart = "20160208";
+        else if(pos == 14) datePart = "20160215";
 
         URL = baseURL + datePart;
 
@@ -200,18 +201,22 @@ public class WeekUitslagenActivity  extends Activity{
         }
 
         String dateURL = year + month + day;
+        Log.d("TEST",dateURL);
 
-        if (dateURL.equals("20141027")){
-            dateURL = "20141020";
+        if(dateURL.equals("20150907") || dateURL.equals("20150914")) {
+            dateURL = "20150921";
         }
-        if (dateURL.equals("20141103")){
-            dateURL = "20141020";
+        if(dateURL.equals("20151026") || dateURL.equals("20151102")) {
+            dateURL = "20151019";
         }
-        if (dateURL.equals("20141222")){
-            dateURL = "20141215";
+        if(dateURL.equals("20151221") || dateURL.equals("20151228")) {
+            dateURL = "20151214";
         }
-        if (dateURL.equals("20141229")){
-            dateURL = "20141215";
+        if(dateURL.equals("20160118") || dateURL.equals("20160125") || dateURL.equals("20160201")) {
+            dateURL = "20160111";
+        }
+        if(Integer.parseInt(dateURL)>20160216) {
+            dateURL = "20160215";
         }
 
         URL = prefs.getString("teamURL", null);
@@ -227,8 +232,8 @@ public class WeekUitslagenActivity  extends Activity{
     public TableRow createHeaderRow(String[] headerstr) {
         TableRow row1 = new TableRow(this);
 
-        headerstr[4] = "";
-        headerstr[5] = "";
+//        headerstr[4] = "";
+//        headerstr[5] = "";
 
         for (int i = 0; i < headerstr.length; i++) {
             if(i!=0 && i!=1 && i!=2) {
@@ -322,15 +327,15 @@ public class WeekUitslagenActivity  extends Activity{
             tablebody   = result.select("table~table > tbody > tr");
 
             ArrayList<String> header = new ArrayList<String>();
-            ListIterator<Element> postIt = tableheader.listIterator();
-            for(int i = 0; i < 10; i++){
-                if(postIt.hasNext()){
-                    header.add(postIt.next().text());
-                }
-            }
+//            ListIterator<Element> postIt = tableheader.listIterator();
+//            for(int i = 0; i < 10; i++){
+//                if(postIt.hasNext()){
+//                    header.add(postIt.next().text());
+//                }
+//            }
             //Add header fields
-            header.add("");
-            header.add("Veld");
+//            header.add("");
+//            header.add("Veld");
 
             String[] headerstr = new String[header.size()];
             header.toArray(headerstr);
