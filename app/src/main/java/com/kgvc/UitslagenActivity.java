@@ -185,7 +185,6 @@ public class UitslagenActivity extends Activity {
                 doc = Jsoup.connect(url).get();
                 table = doc.select("table");
             } catch (IOException e) {
-                // TODO Auto-generated catch block
                 e.printStackTrace();
             }
             return doc;
