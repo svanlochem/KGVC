@@ -27,10 +27,11 @@ public class MainActivity extends Activity {
     MyCompetitionTask CompetitionTask;
     MyTeamTask TeamTask;
 
-    private Spinner competitionSpinner, TeamSpinner;
+    private Spinner timeSpinner, competitionSpinner, TeamSpinner;
     String competitionURL  = "";
     String teamURL = "";
     int TeamNumber = 0;
+    int timeSelected = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,24 +49,121 @@ public class MainActivity extends Activity {
 
         mSingleton = this;
 
+        ListenerOnTimeSpinner();
         ListenerOnCompetitionSpinner();
         ListenerOnTeamSpinner();
     }
 
+    private void ListenerOnTimeSpinner() {
+        timeSpinner = (Spinner) findViewById(R.id.spinner_time);
+
+        timeSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
+
+                timeSelected = pos;
+
+//                boolean timeSelected = false;
+//
+//                if (pos == 1) {
+//
+//                    timeSelected = true;
+//                } //17.00-18.00
+//                else if (pos == 2) {
+//
+//                    timeSelected = true;
+//                } //18.00-19.00
+//                else if (pos == 3) {
+//
+//                    timeSelected = true;
+//                } //19.00-20.00
+//                else if (pos == 4) {
+//;
+//                    timeSelected = true;
+//                } //20.00-21.00
+//                else if (pos == 5) {
+//                    competitionURL = "http://www.toernooi.nl/sport/teams.aspx?id=F181A6FB-29A1-4C23-A8CC-B3022948F255";
+//                    timeSelected = true;
+//                } //21.00-22.00
+//                else if (pos == 6) {
+//                    competitionURL = "http://www.toernooi.nl/sport/teams.aspx?id=52059CF5-0838-4E85-9867-479A33E206B3";
+//                    timeSelected = true;
+//                } //22.00-23.00
+//
+//                if (timeSelected) {
+//                    CompetitionTask = new MyCompetitionTask();
+//                    CompetitionTask.execute(competitionURL);
+//                }
+            }
+
+            public void onNothingSelected(AdapterView<?> arg0) {
+            }
+        });
+    }
+
     private void ListenerOnCompetitionSpinner() {
-        competitionSpinner = (Spinner) findViewById(R.id.spinner_competition);
+        competitionSpinner = (Spinner) findViewById(R.id.spinner_competitions);
 
         competitionSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             public void onItemSelected(AdapterView<?> parent, View view, int pos,long id) {
 
                 boolean compSelected = false;
 
-                if(pos==1)      {competitionURL="http://www.toernooi.nl/sport/teams.aspx?id=226F03F4-856F-4DD3-BF1F-CF0BD180D65B"; compSelected=true;} //17.00-18.00
-                else if(pos==2) {competitionURL="http://www.toernooi.nl/sport/teams.aspx?id=1E0B0979-4E31-4E64-8BC3-3770E8720B26"; compSelected=true;} //18.00-19.00
-                else if(pos==3) {competitionURL="http://www.toernooi.nl/sport/teams.aspx?id=CEA1B07A-F14D-4651-A4D9-509712DB0C36"; compSelected=true;} //19.00-20.00
-                else if(pos==4) {competitionURL="http://www.toernooi.nl/sport/teams.aspx?id=FFEE1FE7-F57F-49F2-93DD-C01D796E2828"; compSelected=true;} //20.00-21.00
-                else if(pos==5) {competitionURL="http://www.toernooi.nl/sport/teams.aspx?id=F181A6FB-29A1-4C23-A8CC-B3022948F255"; compSelected=true;} //21.00-22.00
-                else if(pos==6) {competitionURL="http://www.toernooi.nl/sport/teams.aspx?id=52059CF5-0838-4E85-9867-479A33E206B3"; compSelected=true;} //22.00-23.00
+                switch (timeSelected){
+                    case 1: //17.00-18.00
+                        if(pos==1){ //Winnaars
+                            competitionURL="http://www.toernooi.nl/sport/teams.aspx?id=05A51533-2187-4D3C-8B3E-382C7843FB39";
+                            compSelected=true;
+                        } else if(pos==2){ //Verliezers
+                            competitionURL="http://www.toernooi.nl/sport/teams.aspx?id=C4A78659-7783-48C3-ADD2-1B8EDF67F940";
+                            compSelected=true;
+                        }
+                        break;
+                    case 2: //18.00-19.00
+                        if(pos==1){ //Winnaars
+                            competitionURL="http://www.toernooi.nl/sport/teams.aspx?id=86B608C4-EAA4-4DE9-93BD-08BB6512BBEE";
+                            compSelected=true;
+                        } else if(pos==2){ //Verliezers
+                            competitionURL="http://www.toernooi.nl/sport/teams.aspx?id=1BC72890-B875-4E04-93FA-20059E39B223";
+                            compSelected=true;
+                        }
+                        break;
+                    case 3: //19.00-20.00
+                        if(pos==1){ //Winnaars
+                            competitionURL="http://www.toernooi.nl/sport/teams.aspx?id=066397F8-18D5-4DA6-B73B-F4B11808B146";
+                            compSelected=true;
+                        } else if(pos==2){ //Verliezers
+                            competitionURL="http://www.toernooi.nl/sport/teams.aspx?id=1DD0605A-519D-4083-AA13-B3BD6263D44B";
+                            compSelected=true;
+                        }
+                        break;
+                    case 4: //20.00-21.00
+                        if(pos==1){ //Winnaars
+                            competitionURL="http://www.toernooi.nl/sport/teams.aspx?id=6C2BD790-61C1-4D4C-89B7-72EEF7D3E1FD";
+                            compSelected=true;
+                        } else if(pos==2){ //Verliezers
+                            competitionURL="http://www.toernooi.nl/sport/teams.aspx?id=FE6A34E2-8FEC-42E1-A156-557D2BDB490D";
+                            compSelected=true;
+                        }
+                        break;
+                    case 5: //21.00-22.00
+                        if(pos==1){ //Winnaars
+                            competitionURL="http://www.toernooi.nl/sport/teams.aspx?id=22B7ABB6-4114-4915-AC2F-9921B604C82A";
+                            compSelected=true;
+                        } else if(pos==2){ //Verliezers
+                            competitionURL="http://www.toernooi.nl/sport/teams.aspx?id=856C7BD0-9DC3-444D-B3AA-B34D4C96B568";
+                            compSelected=true;
+                        }
+                        break;
+                    case 6: //22.00-23.00
+                        if(pos==1){ //Winnaars
+                            competitionURL="http://www.toernooi.nl/sport/teams.aspx?id=CBF184EE-A4B2-42D0-B872-0C28D190AE1A";
+                            compSelected=true;
+                        } else if(pos==2){ //Verliezers
+                            competitionURL="http://www.toernooi.nl/sport/teams.aspx?id=2B3674DB-CD04-41A2-96B6-02E76AFEF52F";
+                            compSelected=true;
+                        }
+                        break;
+                }
 
                 if(compSelected){
                     CompetitionTask = new MyCompetitionTask();

@@ -87,21 +87,20 @@ public class WeekUitslagenActivity  extends Activity{
     private void addListenerOnSpinnerItemSelection() {
         spinner = (Spinner) findViewById(R.id.spinner);
 
-        if(URL.substring(84).equals("20150921")) spinner.setSelection(0);
-        else if(URL.substring(84).equals("20150928")) spinner.setSelection(1);
-        else if(URL.substring(84).equals("20151005")) spinner.setSelection(2);
-        else if(URL.substring(84).equals("20151012")) spinner.setSelection(3);
-        else if(URL.substring(84).equals("20151019")) spinner.setSelection(4);
-        else if(URL.substring(84).equals("20151109")) spinner.setSelection(5);
-        else if(URL.substring(84).equals("20151116")) spinner.setSelection(6);
-        else if(URL.substring(84).equals("20151123")) spinner.setSelection(7);
-        else if(URL.substring(84).equals("20151130")) spinner.setSelection(8);
-        else if(URL.substring(84).equals("20151207")) spinner.setSelection(9);
-        else if(URL.substring(84).equals("20151214")) spinner.setSelection(10);
-        else if(URL.substring(84).equals("20160104")) spinner.setSelection(11);
-        else if(URL.substring(84).equals("20160111")) spinner.setSelection(12);
-        else if(URL.substring(84).equals("20160208")) spinner.setSelection(13);
-        else if(URL.substring(84).equals("20160215")) spinner.setSelection(14);
+        if(URL.substring(84).equals("20160222")) spinner.setSelection(0);
+        else if(URL.substring(84).equals("20160229")) spinner.setSelection(1);
+        else if(URL.substring(84).equals("20160307")) spinner.setSelection(2);
+        else if(URL.substring(84).equals("20160314")) spinner.setSelection(3);
+        else if(URL.substring(84).equals("20160321")) spinner.setSelection(4);
+        else if(URL.substring(84).equals("20160411")) spinner.setSelection(5);
+        else if(URL.substring(84).equals("20160418")) spinner.setSelection(6);
+        else if(URL.substring(84).equals("20160425")) spinner.setSelection(7);
+        else if(URL.substring(84).equals("20160502")) spinner.setSelection(8);
+        else if(URL.substring(84).equals("20160509")) spinner.setSelection(9);
+        else if(URL.substring(84).equals("20160523")) spinner.setSelection(10);
+        else if(URL.substring(84).equals("20160530")) spinner.setSelection(11);
+        else if(URL.substring(84).equals("20160606")) spinner.setSelection(12);
+        else if(URL.substring(84).equals("20160613")) spinner.setSelection(13);
 
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
@@ -121,21 +120,20 @@ public class WeekUitslagenActivity  extends Activity{
     public void changeWeek(int pos){
         String datePart = "";
 
-        if(pos == 0) datePart = "20150921";
-        else if(pos == 1) datePart = "20150928";
-        else if(pos == 2) datePart = "20151005";
-        else if(pos == 3) datePart = "20151012";
-        else if(pos == 4) datePart = "20151019";
-        else if(pos == 5) datePart = "20151109";
-        else if(pos == 6) datePart = "20151116";
-        else if(pos == 7) datePart = "20151123";
-        else if(pos == 8) datePart = "20151130";
-        else if(pos == 9) datePart = "20151207";
-        else if(pos == 10) datePart = "20151214";
-        else if(pos == 11) datePart = "20160104";
-        else if(pos == 12) datePart = "20160111";
-        else if(pos == 13) datePart = "20160208";
-        else if(pos == 14) datePart = "20160215";
+        if(pos == 0) datePart = "20160222";
+        else if(pos == 1) datePart = "20160229";
+        else if(pos == 2) datePart = "20160307";
+        else if(pos == 3) datePart = "20160314";
+        else if(pos == 4) datePart = "20160321";
+        else if(pos == 5) datePart = "20160411";
+        else if(pos == 6) datePart = "20160418";
+        else if(pos == 7) datePart = "20160425";
+        else if(pos == 8) datePart = "20160502";
+        else if(pos == 9) datePart = "20160509";
+        else if(pos == 10) datePart = "20160523";
+        else if(pos == 11) datePart = "20160530";
+        else if(pos == 12) datePart = "20160606";
+        else if(pos == 13) datePart = "20160613";
 
         URL = baseURL + datePart;
 
@@ -201,22 +199,14 @@ public class WeekUitslagenActivity  extends Activity{
         }
 
         String dateURL = year + month + day;
-        Log.d("TEST",dateURL);
+//        Log.d("TEST",dateURL);
 
-        if(dateURL.equals("20150907") || dateURL.equals("20150914")) {
-            dateURL = "20150921";
-        }
-        if(dateURL.equals("20151026") || dateURL.equals("20151102")) {
-            dateURL = "20151019";
-        }
-        if(dateURL.equals("20151221") || dateURL.equals("20151228")) {
-            dateURL = "20151214";
-        }
-        if(dateURL.equals("20160118") || dateURL.equals("20160125") || dateURL.equals("20160201")) {
-            dateURL = "20160111";
-        }
-        if(Integer.parseInt(dateURL)>20160216) {
-            dateURL = "20160215";
+        if(dateURL.equals("20160215")) {
+            dateURL = "20160222";
+        } else if(dateURL.equals("20160328") || dateURL.equals("20160404")) {
+            dateURL = "20160321";
+        } else if(dateURL.equals("20160516")) {
+            dateURL = "20160509";
         }
 
         URL = prefs.getString("teamURL", null);

@@ -38,7 +38,7 @@
         android:textColor="@color/red"
         android:text="Kies Competitie"
         android:id="@+id/textViewSpinner1"
-        android:layout_below="@+id/textView3"
+        android:layout_below="@id/textView3"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_marginTop="39dp" />
@@ -46,9 +46,29 @@
     <Spinner
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/spinner_competition"
+        android:id="@+id/spinner_time"
         android:entries= "@array/competition_array"
-        android:layout_below="@+id/textViewSpinner1"
+        android:layout_below="@id/textViewSpinner1"
+        android:textColor="@android:color/white"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/red"
+        android:text="Kies Competitie"
+        android:id="@+id/textViewSpinnerCompetition"
+        android:layout_below="@id/spinner_time"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <Spinner
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/spinner_competitions"
+        android:entries= "@array/competition_winlose"
+        android:layout_below="@id/textViewSpinnerCompetition"
         android:textColor="@android:color/white"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
@@ -58,8 +78,8 @@
         android:layout_height="wrap_content"
         android:textColor="@color/red"
         android:text="Kies Team"
-        android:id="@+id/textViewSpinner2"
-        android:layout_below="@+id/spinner_competition"
+        android:id="@+id/textview_teams"
+        android:layout_below="@id/spinner_competitions"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
 
@@ -68,8 +88,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/spinner_team"
         android:text="team"
-        android:layout_marginTop="36dp"
-        android:layout_below="@+id/spinner_competition"
+        android:layout_below="@id/textview_teams"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
 

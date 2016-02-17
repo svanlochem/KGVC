@@ -13,7 +13,7 @@
     <color name="red">#C01A0E</color>
 
     <string-array name="competition_array">
-        <item>Kies een competitie</item>
+        <item>Kies een tijd</item>
         <item>17.00-18.00 uur</item>
         <item>18.00-19.00 uur</item>
         <item>19.00-20.00 uur</item>
@@ -22,22 +22,27 @@
         <item>22.00-23.00 uur</item>
     </string-array>
 
+    <string-array name="competition_winlose">
+        <item>Kies een competitie</item>
+        <item>Winnaars</item>
+        <item>Verliezers</item>
+    </string-array>
+
     <string-array name="week_array">
-        <item>Week 1 - 21 September 2015</item>
-        <item>Week 2 - 28 September 2015</item>
-        <item>Week 3 - 5 Oktober 2015</item>
-        <item>Week 4 - 12 Oktober 2015</item>
-        <item>Week 5 - 19 Oktober 2015</item>
-        <item>Week 6 - 9 November 2015</item>
-        <item>Week 7 - 16 November 2015</item>
-        <item>Week 8 - 23 November 2015</item>
-        <item>Week 9 - 30 November 2015</item>
-        <item>Week 10 - 7 December 2015</item>
-        <item>Week 11 - 14 December 2015</item>
-        <item>Week 12 - 4 Januari 2016</item>
-        <item>Week 13 - 11 Januari 2016</item>
-        <item>Week 14 - 8 Februari 2016</item>
-        <item>Week 15 - 15 Februari 2016</item>
+        <item>Week 1 - 22 Februari 2016</item>
+        <item>Week 2 - 29 Februari 2016</item>
+        <item>Week 3 - 7 Maart 2016</item>
+        <item>Week 4 - 14 Maart 2016</item>
+        <item>Week 5 - 21 Maart 2016</item>
+        <item>Week 6 - 11 April 2016</item>
+        <item>Week 7 - 18 April 2016</item>
+        <item>Week 8 - 25 April 2016</item>
+        <item>Week 9 - 2 Mei 2016</item>
+        <item>Week 10 - 9 Mei 2016</item>
+        <item>Week 11 - 23 Mei 2016</item>
+        <item>Week 12 - 30 Mei 2016</item>
+        <item>Week 13 - 6 Juni 2016</item>
+        <item>Week 14 - 13 Juni 2016</item>
     </string-array>
 
     <string-array name="quotes">

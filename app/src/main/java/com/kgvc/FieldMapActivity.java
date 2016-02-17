@@ -57,8 +57,8 @@ public class FieldMapActivity extends Activity {
         String URLb = URL.substring(33);
         URL = URLa + "matches" + URLb;
 
-        mt = new MyTask();
-        mt.execute(URL);
+//        mt = new MyTask();
+//        mt.execute(URL);
     }
 
     @Override

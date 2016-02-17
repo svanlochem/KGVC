@@ -134,7 +134,7 @@ public class UitslagenActivity extends Activity {
         headerstr[1] = "Datum";
         headerstr[4] = "";
 
-        for (int i = 0; i < headerstr.length; i++) {
+        for (int i = 0; i < headerstr.length-1; i++) {
             if(i!=0 && i!=2) {
                 TextView t1 = new TextView(this);
                 t1.setPadding(10, 0, 10, 0);
@@ -152,7 +152,7 @@ public class UitslagenActivity extends Activity {
         if(headerstr[3].length() > 15) {headerstr[3] = headerstr[3].substring(0, 15); }
         if(headerstr[5].length() > 15) {headerstr[5] = headerstr[5].substring(0, 15); }
 
-        for (int i = 0; i < headerstr.length; i++) {
+        for (int i = 0; i < headerstr.length-1; i++) {
             if(i!=0 && i!=2) {
                 TextView t1 = new TextView(this);
                 t1.setPadding(10, 0, 10, 0);
